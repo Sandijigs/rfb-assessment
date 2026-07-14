@@ -3,6 +3,7 @@ mod commands;
 mod config;
 mod error;
 mod rpc;
+mod style;
 
 use anyhow::Result;
 use clap::Parser;

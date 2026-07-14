@@ -3,6 +3,7 @@ use serde_json::Value;
 
 use crate::error::AppError;
 use crate::rpc::RpcClient;
+use crate::style::{cyan, green, magenta};
 
 #[derive(Debug, Deserialize)]
 pub struct BlockchainInfo {
@@ -16,10 +17,13 @@ pub struct BlockchainInfo {
 
 pub async fn info(client: &RpcClient) -> Result<(), AppError> {
     let info: BlockchainInfo = client.call("getblockchaininfo", Value::Array(vec![])).await?;
-    println!("Chain:                 {}", info.chain);
-    println!("Blocks:                {}", info.blocks);
-    println!("Headers:               {}", info.headers);
-    println!("Difficulty:            {}", info.difficulty);
-    println!("Verification progress: {:.6}", info.verification_progress);
+    println!("Chain:                 {}", magenta(&info.chain));
+    println!("Blocks:                {}", green(info.blocks));
+    println!("Headers:               {}", green(info.headers));
+    println!("Difficulty:            {}", green(info.difficulty));
+    println!(
+        "Verification progress: {}",
+        cyan(format!("{:.6}", info.verification_progress))
+    );
     Ok(())
 }

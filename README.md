@@ -113,6 +113,8 @@ cargo run -- blockchain-info
 
 ## Usage
 
+> Command output is colored in a real terminal (chain names in magenta, numeric values in green, addresses in cyan). Colors are automatically stripped when stdout is piped or redirected, and can be disabled globally by setting `NO_COLOR=1`.
+
 ```
 $ cargo run -- --help
 Talk to a Bitcoin Core node over JSON-RPC (Regtest via Polar).
@@ -277,4 +279,4 @@ From the assessment's optional list:
 - [x] **Configuration file support** (`--config <path>`, TOML format).
 - [x] **Support for multiple wallets** (`--wallet <name>` flag, wallet-scoped URL routing).
 - [x] **Unit tests** — run with `cargo test`. Covers config precedence (CLI > file > defaults), TOML parsing, and wallet-URL routing.
-- [ ] Pretty terminal output.
+- [x] **Pretty terminal output** — colored, TTY-aware output via `owo-colors`. Colors are stripped when piped/redirected, and can be disabled globally with `NO_COLOR=1`.

@@ -3,6 +3,7 @@ use serde_json::Value;
 
 use crate::error::AppError;
 use crate::rpc::RpcClient;
+use crate::style::{cyan, green, yellow};
 
 #[derive(Debug, Deserialize)]
 pub struct WalletInfo {
@@ -37,11 +38,14 @@ pub async fn info(client: &RpcClient) -> Result<(), AppError> {
         &info.walletname
     };
 
-    println!("Wallet name:         {}", name);
-    println!("Balance:             {} BTC", balances.mine.trusted);
-    println!("Unconfirmed balance: {} BTC", balances.mine.untrusted_pending);
-    println!("Immature balance:    {} BTC", balances.mine.immature);
-    println!("Transactions:        {}", info.txcount);
+    println!("Wallet name:         {}", cyan(name));
+    println!("Balance:             {} BTC", green(balances.mine.trusted));
+    println!(
+        "Unconfirmed balance: {} BTC",
+        yellow(balances.mine.untrusted_pending)
+    );
+    println!("Immature balance:    {} BTC", yellow(balances.mine.immature));
+    println!("Transactions:        {}", green(info.txcount));
     Ok(())
 }
 
@@ -49,6 +53,6 @@ pub async fn balance(client: &RpcClient) -> Result<(), AppError> {
     let bal: f64 = client
         .call_wallet("getbalance", Value::Array(vec![]))
         .await?;
-    println!("{} BTC", bal);
+    println!("{} BTC", green(bal));
     Ok(())
 }
